@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  jenkins:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.jenkins
+    container_name: jenkins-local
+    restart: always
+    privileged: true
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - //var/run/docker.sock:/var/run/docker.sock
+      # Mount local AWS credentials directly to the controller
+      - c:/Users/Guilherme/.aws:/var/jenkins_home/.aws:ro
+
+volumes:
+  jenkins_home:
+    external: true
