@@ -1,12 +1,6 @@
 pipeline {
     agent {
-        dockerfile {
-            filename 'Dockerfile.agent'
-            dir 'docker'
-            label 'terraform-agent'
-            // Mount local .aws directory (read-only)
-            args '-v "c:/Users/Guilherme/.aws:/home/jenkins/.aws:ro"'
-        }
+        label 'terraform'
     }
 
     environment {
