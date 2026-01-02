@@ -22,7 +22,6 @@ pipeline {
                 }
             }
         }
-''
         stage('Terraform Plan') {
             steps {
                 dir('terraform') {
