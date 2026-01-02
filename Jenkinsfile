@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label {
+        dockerfile {
             filename 'Dockerfile.agent'
             dir 'docker'
             label 'terraform-agent'
