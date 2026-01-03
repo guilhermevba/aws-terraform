@@ -1,0 +1,33 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "Installing Terraform..."
+      - wget -q https://releases.hashicorp.com/terraform/1.14.3/terraform_1.14.3_linux_amd64.zip
+      - unzip -q terraform_1.14.3_linux_amd64.zip
+      - mv terraform /usr/local/bin/
+      - terraform --version
+  
+  pre_build:
+    commands:
+      - echo "Initializing Terraform..."
+      - cd terraform
+      - terraform init
+  
+  build:
+    commands:
+      - echo "Running Terraform plan..."
+      - terraform plan -out=tfplan
+      - |
+        if [ "$TERRAFORM_ACTION" = "apply" ]; then
+          echo "Applying Terraform changes..."
+          terraform apply -auto-approve tfplan
+        else
+          echo "Skipping apply - TERRAFORM_ACTION not set to 'apply'"
+        fi
+
+artifacts:
+  files:
+    - terraform/tfplan
+  discard-paths: yes
